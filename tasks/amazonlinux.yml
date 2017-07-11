@@ -7,16 +7,18 @@
 
 - name: install mackerel-agent
   yum: name=mackerel-agent state=latest
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: install mackerel-agent-plugins
   yum: name=mackerel-agent-plugins state=latest
   when: mackerel_use_plugins
-  notify: 
+  ignore_errors: "{{ ansible_check_mode }}"
+  notify:
     - restart mackerel-agent
-    
+
 - name: install mackerel-check-plugins
   yum: name=mackerel-check-plugins state=latest
   when: mackerel_use_plugins
-  notify: 
+  notify:
     - restart mackerel-agent
 
